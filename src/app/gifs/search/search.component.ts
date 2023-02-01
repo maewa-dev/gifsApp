@@ -18,9 +18,12 @@ export class SearchComponent implements OnInit {
 
   search() {
     let value = this.txtSearch.nativeElement.value;
-    this.txtSearch.nativeElement.value = '';
 
+    if ( value.trim().length === 0 ) {
+      return;
+    }
     this.gifsService.searchGifs( value )
+    this.txtSearch.nativeElement.value = '';
   }
 
 }

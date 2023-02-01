@@ -13,8 +13,14 @@ export class GifsService {
     return [...this._historial]
   }
 
-  searchGifs( query: string ) {
-    this._historial.unshift( query )
+  searchGifs( query: string = '' ) {
+    query = query.trim().toLowerCase();
+
+    if ( !this._historial.includes(query) ) {
+      this._historial.unshift( query )
+      this._historial = this._historial.splice(0,10);
+    }
+
   }
 }
 
