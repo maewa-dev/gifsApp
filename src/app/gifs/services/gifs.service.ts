@@ -8,13 +8,8 @@ import { Gif, SearchGifResponse } from '../interface/gifs.interface';
 export class GifsService {
 
   constructor (private http: HttpClient) { 
-
-    //todo_mrt otra forma de hacerlo es ponerlo todo en una sola línea
-    // this._historial = JSON.parse(localStorage.getItem('hostorial)!) || []
-    if( localStorage.getItem('historial') ) {
-      this._historial = JSON.parse(localStorage.getItem('historial')! );
-    }
-    localStorage.getItem('historial');
+    this._historial = JSON.parse(localStorage.getItem('historial')!) || []
+    this.results = JSON.parse(localStorage.getItem('resultados')!) || []
   }
 
   private apiKey: string = 'UXOcSsIo2kQ2hNUWwrfHpD01fO7jmdyV';
@@ -36,9 +31,11 @@ export class GifsService {
       localStorage.setItem('historial', JSON.stringify(this._historial));
     }
 
-    this.http.get<SearchGifResponse>(`https://api.giphy.com/v1/gifs/search?api_key=UXOcSsIo2kQ2hNUWwrfHpD01fO7jmdyV&limit=10&q=${ query }`)
+    this.http.get<SearchGifResponse>(`https://api.giphy.com/v1/gifs/search?api_key=${ this.apiKey }&limit=10&q=${ query }`)
     .subscribe( (response) => {
       this.results = response.data;
+      localStorage.setItem('resultados', JSON.stringify(this.results));
+
     }) 
 
   }
