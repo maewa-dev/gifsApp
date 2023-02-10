@@ -17,4 +17,8 @@ export class SidebarComponent implements OnInit {
     return this.gifsService.historial;
   }
 
+  search (searched: string) {
+    this.gifsService.searchGifs(searched)
+  }
+
 }
